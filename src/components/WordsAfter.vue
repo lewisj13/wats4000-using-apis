@@ -1,14 +1,14 @@
 <template>
-  <div class="rhymesaurus">
-   <p>
-      <router-link v-bind:to="{name: 'WordsPrecede'}">Words Precede</router-link>
-      &bull;
-      <router-link v-bind:to="{name: 'Rhymesaurus'}">Rhymesaurus</router-link>
-      &bull;
-      <router-link v-bind:to="{name: 'WordsAfter'}">Words After</router-link>
-      </p>
+  <div class="words-after">
+  <p>
+     <router-link v-bind:to="{name: 'WordsPrecede'}">Words Precede</router-link>
+     &bull;
+     <router-link v-bind:to="{name: 'Rhymesaurus'}">Rhymesaurus</router-link>
+     &bull;
+     <router-link v-bind:to="{name: 'WordsAfter'}">Words After</router-link>
+     </p>
     <form v-on:submit.prevent="findWords">
-      <p>Find rhymes for <input type="text" v-model="rhyme"> related to <input type="text" v-model="phrase"> <button type="submit">Search</button></p>
+      <p>Find words that follow the word <input type="text" v-model="phrase">   <button type="submit">Search</button></p>
     </form>
 
     <ul v-if="results && results.length > 0" class="results">
@@ -34,7 +34,7 @@
 <script>
 import axios from 'axios';
 export default {
-  name: 'Rhymesaurus',
+  name: 'words-after',
   data () {
     return {
       results: null,
@@ -45,10 +45,9 @@ export default {
   },
   methods: {
     findWords: function(){
-      axios.get('https://api.datamuse.com/words', {
+      axios.get('https://api.datamuse.com/words?rel_bga=statue', {
         params: {
-          ml: this.phrase,
-          rel_rhy: this.rhyme
+          rel_bga: this.phrase,
         }
       })
       .then(response => {
@@ -64,7 +63,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.rhymesaurus {
+.words-after {
   font-size: 1.4rem;
 }
 
